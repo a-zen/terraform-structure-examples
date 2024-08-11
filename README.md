@@ -41,3 +41,15 @@ terraform init --backend-config=stages/dev/backend.tfvars
 ````
 terraform apply -var="config_file=stages/dev/config.yaml"
 ````
+
+
+# Open Points
+
+How to don't repeat yourself when using yaml?
+* Could leverage yaml merging:
+https://registry.terraform.io/providers/netascode/utils/latest/docs/functions/yaml_merge
+https://spacelift.io/blog/terraform-merge-function
+
+* Could convert yaml into json and use native json support:
+https://developer.hashicorp.com/terraform/language/syntax/json
+

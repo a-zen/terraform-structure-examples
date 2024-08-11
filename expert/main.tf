@@ -1,16 +1,16 @@
 locals {
-  run_name = "awesome_service"
+  run_name = "my-service"
 
   pubsub_subscriptions = {
     orders = {
       name          = "${local.run_name}-orders",
       topic         = "orders",
-      push_endpoint = "https://awesome-service/orders",
+      push_endpoint = "https://my-service/orders",
     },
     registrations = {
       name          = "${local.run_name}-registrations",
       topic         = "registrations",
-      push_endpoint = "https://awesome-service/registrations",
+      push_endpoint = "https://my-service/registrations",
     }
   }
 }
@@ -24,6 +24,13 @@ module "cloud_run_service" {
   memory   = "1024M"
   minScale = var.run_min_scale
   maxScale = var.run_max_scale
+  tag      = "abcdef-v1.0.0"
+  envs = {
+    SOME_VARIABLE = "something"
+  }
+  secrets = {
+    SECRET_VARIABLE = "my-api-key"
+  }
 }
 
 module "cloud_sql" {

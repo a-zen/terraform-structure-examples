@@ -1,0 +1,5 @@
+.state
+.terraform
+.terraform.lock.hcl
+deployment
+tfplan.out

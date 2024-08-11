@@ -1,0 +1,21 @@
+project: prd
+name: my-service
+container:
+  size: big
+  tag: abcdef-v1.0.0
+  env:
+    SOME_VARIABLE: "something"
+  secrets:
+    SECRET_VARIABLE: my-api-key
+database:
+  size: big
+  type: postgres
+  version: 15
+eventStreaming:
+  subscriptions:
+    orders:
+      topic: orders
+      endpoint: /orders
+    registrations:
+      topic: registrations
+      endpoint: /registrations

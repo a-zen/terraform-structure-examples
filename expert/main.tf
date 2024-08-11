@@ -13,6 +13,8 @@ locals {
       push_endpoint = "https://my-service/registrations",
     }
   }
+
+  all_pubsub_subscriptions = merge(var.additional_pubsub_subscriptions, local.pubsub_subscriptions)
 }
 
 module "cloud_run_service" {
@@ -43,10 +45,19 @@ module "cloud_sql" {
 
 module "pubsub_subscriptions" {
   source   = "../modules/pubsub_subscription"
-  for_each = local.pubsub_subscriptions
+  for_each = local.all_pubsub_subscriptions
 
   project           = var.project
   subscription_name = each.value.name
   topic_name        = each.value.topic
   push_endpoint     = each.value.push_endpoint
 }
+
+
+resource "local_file" "default" {
+  count = var.toggle_feat_xy ? 1 : 0
+
+  content  = jsonencode({ "project" = var.project })
+  filename = "deployment/${var.project}/some_additional_resource.json"
+}
+
